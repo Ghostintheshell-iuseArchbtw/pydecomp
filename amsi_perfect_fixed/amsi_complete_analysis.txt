@@ -1,0 +1,70 @@
+COMPLETE BINARY ANALYSIS REPORT
+================================================================================
+File: C:\Windows\System32\amsi.dll
+Architecture: x64
+Analysis Date: June 24, 2025
+
+OVERVIEW:
+  Total Functions: 64
+  Exported Functions: 14
+  Discovered Functions: 50
+
+COMPLETE ANALYSIS STATISTICS:
+  Functions with complete analysis: 64
+  Total instructions analyzed: 5517
+  Total basic blocks: 357
+  Total API calls identified: 386
+
+DETAILED FUNCTION ANALYSIS:
+Function Name                            Type         Instructions Blocks   Purpose        
+------------------------------------------------------------------------------------------
+sub_31c8                                 discovered   368          24       wrapper_functi 
+sub_3206                                 discovered   351          23       wrapper_functi 
+sub_323b                                 discovered   336          22       wrapper_functi 
+sub_32c0                                 discovered   306          20       wrapper_functi 
+sub_1bc8                                 discovered   285          6        wrapper_functi 
+AmsiInitialize                           exported     274          17       wrapper_functi 
+sub_33a8                                 discovered   263          16       wrapper_functi 
+sub_267c                                 discovered   259          19       wrapper_functi 
+sub_3430                                 discovered   214          11       wrapper_functi 
+sub_36de                                 discovered   173          9        wrapper_functi 
+sub_21d8                                 discovered   149          9        wrapper_functi 
+sub_2450                                 discovered   125          5        wrapper_functi 
+sub_2460                                 discovered   121          5        wrapper_functi 
+sub_19ae                                 discovered   119          8        wrapper_functi 
+AmsiUacInitialize                        exported     117          9        wrapper_functi 
+sub_1585                                 discovered   111          9        wrapper_functi 
+sub_24a2                                 discovered   104          5        wrapper_functi 
+sub_1274                                 discovered   99           7        wrapper_functi 
+sub_1408                                 discovered   94           6        wrapper_functi 
+sub_1411                                 discovered   91           6        wrapper_functi 
+sub_3b0c                                 discovered   86           5        wrapper_functi 
+AmsiUacScan                              exported     85           6        wrapper_functi 
+sub_20a0                                 discovered   85           6        wrapper_functi 
+DllGetClassObject                        exported     84           6        wrapper_functi 
+sub_20ae                                 discovered   80           6        wrapper_functi 
+sub_3cea                                 discovered   70           3        wrapper_functi 
+sub_3858                                 discovered   66           5        wrapper_functi 
+AmsiScanBuffer                           exported     64           3        wrapper_functi 
+sub_3cf6                                 discovered   64           3        wrapper_functi 
+sub_12a6                                 discovered   63           5        wrapper_functi 
+sub_3866                                 discovered   61           5        wrapper_functi 
+AmsiNotifyOperation                      exported     56           3        wrapper_functi 
+sub_1748                                 discovered   52           4        wrapper_functi 
+sub_1753                                 discovered   49           4        wrapper_functi 
+sub_38cc                                 discovered   42           5        wrapper_functi 
+sub_3a0a                                 discovered   40           5        wrapper_functi 
+sub_3d53                                 discovered   38           2        wrapper_functi 
+sub_3c51                                 discovered   29           2        wrapper_functi 
+sub_18a2                                 discovered   27           3        wrapper_functi 
+sub_3e98                                 discovered   26           1        wrapper_functi 
+AmsiOpenSession                          exported     25           3        unknown        
+AmsiScanString                           exported     24           2        wrapper_functi 
+sub_1912                                 discovered   24           1        wrapper_functi 
+sub_39ac                                 discovered   23           2        wrapper_functi 
+sub_3a82                                 discovered   23           2        wrapper_functi 
+sub_3de4                                 discovered   23           2        wrapper_functi 
+AmsiUninitialize                         exported     22           2        wrapper_functi 
+AmsiUacUninitialize                      exported     21           1        wrapper_functi 
+sub_1842                                 discovered   21           2        wrapper_functi 
+sub_3a2c                                 discovered   21           2        wrapper_functi 

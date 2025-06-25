@@ -1,0 +1,2088 @@
+{
+  "binary_info": {
+    "path": "C:\\Windows\\System32\\amsi.dll",
+    "architecture": "x64",
+    "image_base": 6442450944,
+    "entry_point": 38256
+  },
+  "analysis_summary": {
+    "total_functions": 64,
+    "exported_functions": 14,
+    "discovered_functions": 50,
+    "sections": 8,
+    "imports": 97,
+    "exports": 14,
+    "strings": 1416
+  },
+  "functions": {
+    "AmsiCloseSession": {
+      "address": 35568,
+      "type": "exported",
+      "purpose": "unknown",
+      "instruction_count": 4,
+      "complexity_score": 4,
+      "complete_analysis": {
+        "basic_blocks": 1,
+        "api_calls": 0,
+        "control_flow": {
+          "calls": 0,
+          "jumps": 1,
+          "returns": 0
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "rcx",
+          "rax"
+        ]
+      }
+    },
+    "AmsiInitialize": {
+      "address": 28480,
+      "type": "exported",
+      "purpose": "wrapper_function",
+      "instruction_count": 274,
+      "complexity_score": 326,
+      "complete_analysis": {
+        "basic_blocks": 17,
+        "api_calls": 16,
+        "control_flow": {
+          "calls": 16,
+          "jumps": 59,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "edi",
+          "ecx",
+          "xmm0",
+          "r9d",
+          "rbp",
+          "rbx",
+          "r10d",
+          "rcx",
+          "r12",
+          "r8",
+          "bx",
+          "ebx",
+          "edx",
+          "rsp",
+          "r9",
+          "rdi",
+          "rdx",
+          "r8d",
+          "rax",
+          "r14",
+          "r15",
+          "eax",
+          "r10",
+          "rsi"
+        ]
+      }
+    },
+    "AmsiNotifyOperation": {
+      "address": 35680,
+      "type": "exported",
+      "purpose": "wrapper_function",
+      "instruction_count": 56,
+      "complexity_score": 60,
+      "complete_analysis": {
+        "basic_blocks": 3,
+        "api_calls": 2,
+        "control_flow": {
+          "calls": 2,
+          "jumps": 10,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "rdx",
+          "r14",
+          "edi",
+          "rax",
+          "rcx",
+          "eax",
+          "rbp",
+          "rsp",
+          "rbx",
+          "r9",
+          "rdi",
+          "r8d",
+          "rsi"
+        ]
+      }
+    },
+    "AmsiOpenSession": {
+      "address": 35472,
+      "type": "exported",
+      "purpose": "unknown",
+      "instruction_count": 25,
+      "complexity_score": 25,
+      "complete_analysis": {
+        "basic_blocks": 3,
+        "api_calls": 0,
+        "control_flow": {
+          "calls": 0,
+          "jumps": 6,
+          "returns": 2
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "rdx",
+          "rcx",
+          "eax",
+          "r8d",
+          "rax"
+        ]
+      }
+    },
+    "AmsiScanBuffer": {
+      "address": 33184,
+      "type": "exported",
+      "purpose": "wrapper_function",
+      "instruction_count": 64,
+      "complexity_score": 70,
+      "complete_analysis": {
+        "basic_blocks": 3,
+        "api_calls": 3,
+        "control_flow": {
+          "calls": 3,
+          "jumps": 10,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "rdx",
+          "r11",
+          "r14",
+          "r15",
+          "edi",
+          "rcx",
+          "rax",
+          "r9d",
+          "r8",
+          "rbp",
+          "eax",
+          "rsp",
+          "rbx",
+          "r9",
+          "rdi",
+          "r8d",
+          "rsi"
+        ]
+      }
+    },
+    "AmsiScanString": {
+      "address": 33088,
+      "type": "exported",
+      "purpose": "wrapper_function",
+      "instruction_count": 24,
+      "complexity_score": 26,
+      "complete_analysis": {
+        "basic_blocks": 2,
+        "api_calls": 1,
+        "control_flow": {
+          "calls": 1,
+          "jumps": 5,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 56,
+        "register_usage": [
+          "rdx",
+          "r11",
+          "r8",
+          "eax",
+          "rsp",
+          "r11d",
+          "r11w",
+          "r9",
+          "r10",
+          "rax"
+        ]
+      }
+    },
+    "AmsiUacInitialize": {
+      "address": 5488,
+      "type": "exported",
+      "purpose": "wrapper_function",
+      "instruction_count": 117,
+      "complexity_score": 139,
+      "complete_analysis": {
+        "basic_blocks": 9,
+        "api_calls": 10,
+        "control_flow": {
+          "calls": 10,
+          "jumps": 25,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "rdx",
+          "r14",
+          "rcx",
+          "rax",
+          "ecx",
+          "xmm0",
+          "eax",
+          "r8",
+          "rbp",
+          "ebx",
+          "rsp",
+          "edx",
+          "r9d",
+          "rbx",
+          "r9",
+          "rdi",
+          "rsi"
+        ]
+      }
+    },
+    "AmsiUacScan": {
+      "address": 8352,
+      "type": "exported",
+      "purpose": "wrapper_function",
+      "instruction_count": 85,
+      "complexity_score": 97,
+      "complete_analysis": {
+        "basic_blocks": 6,
+        "api_calls": 6,
+        "control_flow": {
+          "calls": 6,
+          "jumps": 18,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "rdx",
+          "r14",
+          "r8",
+          "rcx",
+          "eax",
+          "rax",
+          "r9d",
+          "rbp",
+          "ebx",
+          "rsp",
+          "edx",
+          "rbx",
+          "r9",
+          "rdi",
+          "rsi"
+        ]
+      }
+    },
+    "AmsiUacUninitialize": {
+      "address": 46784,
+      "type": "exported",
+      "purpose": "wrapper_function",
+      "instruction_count": 21,
+      "complexity_score": 25,
+      "complete_analysis": {
+        "basic_blocks": 1,
+        "api_calls": 2,
+        "control_flow": {
+          "calls": 2,
+          "jumps": 3,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 32,
+        "register_usage": [
+          "rcx",
+          "r8",
+          "edx",
+          "rsp",
+          "rbx",
+          "r9",
+          "rax"
+        ]
+      }
+    },
+    "AmsiUninitialize": {
+      "address": 6208,
+      "type": "exported",
+      "purpose": "wrapper_function",
+      "instruction_count": 22,
+      "complexity_score": 26,
+      "complete_analysis": {
+        "basic_blocks": 2,
+        "api_calls": 2,
+        "control_flow": {
+          "calls": 2,
+          "jumps": 4,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 32,
+        "register_usage": [
+          "rcx",
+          "r8",
+          "edx",
+          "rsp",
+          "rbx",
+          "r9",
+          "rax"
+        ]
+      }
+    },
+    "DllCanUnloadNow": {
+      "address": 36144,
+      "type": "exported",
+      "purpose": "wrapper_function",
+      "instruction_count": 11,
+      "complexity_score": 13,
+      "complete_analysis": {
+        "basic_blocks": 1,
+        "api_calls": 1,
+        "control_flow": {
+          "calls": 1,
+          "jumps": 0,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 40,
+        "register_usage": [
+          "rcx",
+          "cl",
+          "ecx",
+          "eax",
+          "rsp",
+          "rax"
+        ]
+      }
+    },
+    "DllGetClassObject": {
+      "address": 30160,
+      "type": "exported",
+      "purpose": "wrapper_function",
+      "instruction_count": 84,
+      "complexity_score": 92,
+      "complete_analysis": {
+        "basic_blocks": 6,
+        "api_calls": 2,
+        "control_flow": {
+          "calls": 2,
+          "jumps": 18,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "rdx",
+          "r14",
+          "r8",
+          "rax",
+          "rcx",
+          "eax",
+          "rbp",
+          "ebx",
+          "rsp",
+          "rbx",
+          "rdi",
+          "rsi"
+        ]
+      }
+    },
+    "DllRegisterServer": {
+      "address": 42768,
+      "type": "exported",
+      "purpose": "unknown",
+      "instruction_count": 2,
+      "complexity_score": 2,
+      "complete_analysis": {
+        "basic_blocks": 1,
+        "api_calls": 0,
+        "control_flow": {
+          "calls": 0,
+          "jumps": 0,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "eax"
+        ]
+      }
+    },
+    "DllUnregisterServer": {
+      "address": 42768,
+      "type": "exported",
+      "purpose": "unknown",
+      "instruction_count": 2,
+      "complexity_score": 2,
+      "complete_analysis": {
+        "basic_blocks": 1,
+        "api_calls": 0,
+        "control_flow": {
+          "calls": 0,
+          "jumps": 0,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "eax"
+        ]
+      }
+    },
+    "sub_1120": {
+      "address": 4384,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 13,
+      "complexity_score": 17,
+      "complete_analysis": {
+        "basic_blocks": 2,
+        "api_calls": 2,
+        "control_flow": {
+          "calls": 2,
+          "jumps": 1,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 40,
+        "register_usage": [
+          "rcx",
+          "rsp",
+          "eax",
+          "rax"
+        ]
+      }
+    },
+    "sub_1140": {
+      "address": 4416,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 18,
+      "complexity_score": 24,
+      "complete_analysis": {
+        "basic_blocks": 2,
+        "api_calls": 3,
+        "control_flow": {
+          "calls": 3,
+          "jumps": 1,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 40,
+        "register_usage": [
+          "rcx",
+          "eax",
+          "dl",
+          "rsp",
+          "rax"
+        ]
+      }
+    },
+    "sub_1274": {
+      "address": 4724,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 99,
+      "complexity_score": 113,
+      "complete_analysis": {
+        "basic_blocks": 7,
+        "api_calls": 3,
+        "control_flow": {
+          "calls": 3,
+          "jumps": 17,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 48,
+        "register_usage": [
+          "ecx",
+          "r9d",
+          "rbp",
+          "rbx",
+          "al",
+          "rcx",
+          "r8",
+          "cl",
+          "ebx",
+          "edx",
+          "rsp",
+          "rdi",
+          "esi",
+          "rdx",
+          "bl",
+          "r8d",
+          "rax",
+          "ax",
+          "eax",
+          "rsi"
+        ]
+      }
+    },
+    "sub_12a6": {
+      "address": 4774,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 63,
+      "complexity_score": 71,
+      "complete_analysis": {
+        "basic_blocks": 5,
+        "api_calls": 2,
+        "control_flow": {
+          "calls": 2,
+          "jumps": 11,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "al",
+          "rcx",
+          "r8",
+          "eax",
+          "cl",
+          "r9d",
+          "edx",
+          "ebx",
+          "rbp",
+          "rsi",
+          "rsp",
+          "rbx",
+          "rdi",
+          "esi",
+          "r8d",
+          "rax"
+        ]
+      }
+    },
+    "sub_1408": {
+      "address": 5128,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 94,
+      "complexity_score": 112,
+      "complete_analysis": {
+        "basic_blocks": 6,
+        "api_calls": 9,
+        "control_flow": {
+          "calls": 9,
+          "jumps": 15,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 48,
+        "register_usage": [
+          "rdx",
+          "rcx",
+          "r8",
+          "eax",
+          "ecx",
+          "r9d",
+          "rbp",
+          "ebx",
+          "rsp",
+          "edx",
+          "rbx",
+          "rax"
+        ]
+      }
+    },
+    "sub_1411": {
+      "address": 5137,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 91,
+      "complexity_score": 109,
+      "complete_analysis": {
+        "basic_blocks": 6,
+        "api_calls": 9,
+        "control_flow": {
+          "calls": 9,
+          "jumps": 15,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 48,
+        "register_usage": [
+          "rdx",
+          "rcx",
+          "r8",
+          "eax",
+          "ecx",
+          "r9d",
+          "ebx",
+          "edx",
+          "rsp",
+          "rbp",
+          "rbx",
+          "rax"
+        ]
+      }
+    },
+    "sub_1585": {
+      "address": 5509,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 111,
+      "complexity_score": 133,
+      "complete_analysis": {
+        "basic_blocks": 9,
+        "api_calls": 10,
+        "control_flow": {
+          "calls": 10,
+          "jumps": 25,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 32,
+        "register_usage": [
+          "rdx",
+          "rcx",
+          "r14",
+          "ecx",
+          "rax",
+          "xmm0",
+          "eax",
+          "r8",
+          "rbp",
+          "ebx",
+          "rsp",
+          "edx",
+          "r9d",
+          "rbx",
+          "r9",
+          "rdi",
+          "rsi"
+        ]
+      }
+    },
+    "sub_1748": {
+      "address": 5960,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 52,
+      "complexity_score": 66,
+      "complete_analysis": {
+        "basic_blocks": 4,
+        "api_calls": 5,
+        "control_flow": {
+          "calls": 5,
+          "jumps": 7,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 48,
+        "register_usage": [
+          "rdx",
+          "rcx",
+          "r8",
+          "eax",
+          "rax",
+          "r9d",
+          "edx",
+          "rsp",
+          "rbx",
+          "r9",
+          "rdi",
+          "rsi"
+        ]
+      }
+    },
+    "sub_1753": {
+      "address": 5971,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 49,
+      "complexity_score": 63,
+      "complete_analysis": {
+        "basic_blocks": 4,
+        "api_calls": 5,
+        "control_flow": {
+          "calls": 5,
+          "jumps": 7,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 48,
+        "register_usage": [
+          "rdx",
+          "rcx",
+          "r8",
+          "eax",
+          "rax",
+          "r9d",
+          "edx",
+          "rsp",
+          "rbx",
+          "r9",
+          "rdi",
+          "rsi"
+        ]
+      }
+    },
+    "sub_1842": {
+      "address": 6210,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 21,
+      "complexity_score": 25,
+      "complete_analysis": {
+        "basic_blocks": 2,
+        "api_calls": 2,
+        "control_flow": {
+          "calls": 2,
+          "jumps": 4,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 32,
+        "register_usage": [
+          "rcx",
+          "r8",
+          "edx",
+          "rsp",
+          "rbx",
+          "r9",
+          "rax"
+        ]
+      }
+    },
+    "sub_18a2": {
+      "address": 6306,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 27,
+      "complexity_score": 33,
+      "complete_analysis": {
+        "basic_blocks": 3,
+        "api_calls": 2,
+        "control_flow": {
+          "calls": 2,
+          "jumps": 6,
+          "returns": 0
+        },
+        "local_variables": 0,
+        "stack_frame_size": 32,
+        "register_usage": [
+          "rcx",
+          "edx",
+          "rsp",
+          "rbx",
+          "rax"
+        ]
+      }
+    },
+    "sub_1912": {
+      "address": 6418,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 24,
+      "complexity_score": 26,
+      "complete_analysis": {
+        "basic_blocks": 1,
+        "api_calls": 1,
+        "control_flow": {
+          "calls": 1,
+          "jumps": 1,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 48,
+        "register_usage": [
+          "rcx",
+          "ecx",
+          "xmm0",
+          "edx",
+          "rsp",
+          "rbx",
+          "r9",
+          "r8d",
+          "rax"
+        ]
+      }
+    },
+    "sub_19ae": {
+      "address": 6574,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 119,
+      "complexity_score": 131,
+      "complete_analysis": {
+        "basic_blocks": 8,
+        "api_calls": 6,
+        "control_flow": {
+          "calls": 6,
+          "jumps": 22,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 64,
+        "register_usage": [
+          "r9d",
+          "rbp",
+          "r13",
+          "rbx",
+          "rcx",
+          "r12",
+          "edx",
+          "rsp",
+          "ebp",
+          "r9",
+          "rdi",
+          "esi",
+          "rdx",
+          "r8d",
+          "rax",
+          "r14",
+          "r15",
+          "eax",
+          "rsi"
+        ]
+      }
+    },
+    "sub_1bc8": {
+      "address": 7112,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 285,
+      "complexity_score": 333,
+      "complete_analysis": {
+        "basic_blocks": 6,
+        "api_calls": 22,
+        "control_flow": {
+          "calls": 22,
+          "jumps": 20,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "edi",
+          "ecx",
+          "xmm0",
+          "r9d",
+          "rbp",
+          "r13",
+          "rbx",
+          "al",
+          "rcx",
+          "r12",
+          "r8",
+          "edx",
+          "ebx",
+          "rsp",
+          "r15w",
+          "r9",
+          "r15d",
+          "rdi",
+          "r11",
+          "rdx",
+          "r13d",
+          "r8d",
+          "rax",
+          "r13b",
+          "r14",
+          "r15",
+          "eax",
+          "dl"
+        ]
+      }
+    },
+    "sub_20a0": {
+      "address": 8352,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 85,
+      "complexity_score": 97,
+      "complete_analysis": {
+        "basic_blocks": 6,
+        "api_calls": 6,
+        "control_flow": {
+          "calls": 6,
+          "jumps": 18,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "rdx",
+          "r14",
+          "r8",
+          "rcx",
+          "eax",
+          "rax",
+          "r9d",
+          "rbp",
+          "ebx",
+          "rsp",
+          "edx",
+          "rbx",
+          "r9",
+          "rdi",
+          "rsi"
+        ]
+      }
+    },
+    "sub_20ae": {
+      "address": 8366,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 80,
+      "complexity_score": 92,
+      "complete_analysis": {
+        "basic_blocks": 6,
+        "api_calls": 6,
+        "control_flow": {
+          "calls": 6,
+          "jumps": 18,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 48,
+        "register_usage": [
+          "rdx",
+          "rcx",
+          "r8",
+          "r14",
+          "eax",
+          "rax",
+          "r9d",
+          "rbp",
+          "ebx",
+          "rsp",
+          "edx",
+          "rbx",
+          "r9",
+          "rdi",
+          "rsi"
+        ]
+      }
+    },
+    "sub_21d8": {
+      "address": 8664,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 149,
+      "complexity_score": 169,
+      "complete_analysis": {
+        "basic_blocks": 9,
+        "api_calls": 10,
+        "control_flow": {
+          "calls": 10,
+          "jumps": 23,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "edi",
+          "ecx",
+          "rbp",
+          "r13",
+          "rbx",
+          "al",
+          "rcx",
+          "r12",
+          "r8",
+          "edx",
+          "rsp",
+          "r9",
+          "rdi",
+          "rdx",
+          "r12d",
+          "rax",
+          "r14",
+          "r15",
+          "eax",
+          "rsi"
+        ]
+      }
+    },
+    "sub_2450": {
+      "address": 9296,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 125,
+      "complexity_score": 141,
+      "complete_analysis": {
+        "basic_blocks": 5,
+        "api_calls": 4,
+        "control_flow": {
+          "calls": 4,
+          "jumps": 15,
+          "returns": 3
+        },
+        "local_variables": 0,
+        "stack_frame_size": 96,
+        "register_usage": [
+          "ax",
+          "rdx",
+          "rcx",
+          "r8",
+          "eax",
+          "edi",
+          "rax",
+          "r9d",
+          "ecx",
+          "edx",
+          "rsp",
+          "rbx",
+          "rdi",
+          "esi",
+          "r8d",
+          "rsi"
+        ]
+      }
+    },
+    "sub_2460": {
+      "address": 9312,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 121,
+      "complexity_score": 137,
+      "complete_analysis": {
+        "basic_blocks": 5,
+        "api_calls": 4,
+        "control_flow": {
+          "calls": 4,
+          "jumps": 15,
+          "returns": 3
+        },
+        "local_variables": 0,
+        "stack_frame_size": 96,
+        "register_usage": [
+          "ax",
+          "rdx",
+          "rcx",
+          "r8",
+          "eax",
+          "edi",
+          "rax",
+          "r9d",
+          "ecx",
+          "edx",
+          "rsp",
+          "rbx",
+          "rdi",
+          "esi",
+          "r8d",
+          "rsi"
+        ]
+      }
+    },
+    "sub_24a2": {
+      "address": 9378,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 104,
+      "complexity_score": 116,
+      "complete_analysis": {
+        "basic_blocks": 5,
+        "api_calls": 4,
+        "control_flow": {
+          "calls": 4,
+          "jumps": 13,
+          "returns": 3
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "ax",
+          "rdx",
+          "rcx",
+          "edi",
+          "eax",
+          "ecx",
+          "r8",
+          "r9d",
+          "rsi",
+          "edx",
+          "rsp",
+          "rbx",
+          "rdi",
+          "esi",
+          "r8d",
+          "rax"
+        ]
+      }
+    },
+    "sub_2650": {
+      "address": 9808,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 10,
+      "complexity_score": 12,
+      "complete_analysis": {
+        "basic_blocks": 1,
+        "api_calls": 0,
+        "control_flow": {
+          "calls": 0,
+          "jumps": 1,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 40,
+        "register_usage": [
+          "rcx",
+          "rsp",
+          "rdx",
+          "rax"
+        ]
+      }
+    },
+    "sub_267c": {
+      "address": 9852,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 259,
+      "complexity_score": 309,
+      "complete_analysis": {
+        "basic_blocks": 19,
+        "api_calls": 23,
+        "control_flow": {
+          "calls": 23,
+          "jumps": 48,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "ecx",
+          "xmm0",
+          "r9d",
+          "rbp",
+          "r13",
+          "rbx",
+          "al",
+          "rcx",
+          "r12",
+          "r8",
+          "ebx",
+          "edx",
+          "rsp",
+          "r9",
+          "rdi",
+          "r11",
+          "rdx",
+          "r12d",
+          "r13d",
+          "r8d",
+          "rax",
+          "r14",
+          "r15",
+          "eax",
+          "r10"
+        ]
+      }
+    },
+    "sub_3124": {
+      "address": 12580,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 8,
+      "complexity_score": 10,
+      "complete_analysis": {
+        "basic_blocks": 1,
+        "api_calls": 0,
+        "control_flow": {
+          "calls": 0,
+          "jumps": 0,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 40,
+        "register_usage": [
+          "rcx",
+          "rsp",
+          "rax"
+        ]
+      }
+    },
+    "sub_31c8": {
+      "address": 12744,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 368,
+      "complexity_score": 454,
+      "complete_analysis": {
+        "basic_blocks": 24,
+        "api_calls": 31,
+        "control_flow": {
+          "calls": 31,
+          "jumps": 46,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "ecx",
+          "xmm0",
+          "r9d",
+          "rbp",
+          "r13",
+          "rbx",
+          "rcx",
+          "r8",
+          "edx",
+          "ebx",
+          "rsp",
+          "r9",
+          "rdi",
+          "rdx",
+          "xmm1",
+          "r14d",
+          "r13d",
+          "r8d",
+          "rax",
+          "r14",
+          "eax",
+          "r14b",
+          "rsi"
+        ]
+      }
+    },
+    "sub_3206": {
+      "address": 12806,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 351,
+      "complexity_score": 435,
+      "complete_analysis": {
+        "basic_blocks": 23,
+        "api_calls": 30,
+        "control_flow": {
+          "calls": 30,
+          "jumps": 44,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "ecx",
+          "xmm0",
+          "r9d",
+          "rbp",
+          "r13",
+          "rbx",
+          "rcx",
+          "r8",
+          "edx",
+          "ebx",
+          "rsp",
+          "r9",
+          "rdi",
+          "rdx",
+          "xmm1",
+          "r14d",
+          "r13d",
+          "r8d",
+          "rax",
+          "r14",
+          "eax",
+          "r14b",
+          "rsi"
+        ]
+      }
+    },
+    "sub_323b": {
+      "address": 12859,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 336,
+      "complexity_score": 418,
+      "complete_analysis": {
+        "basic_blocks": 22,
+        "api_calls": 29,
+        "control_flow": {
+          "calls": 29,
+          "jumps": 42,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "ecx",
+          "xmm0",
+          "r9d",
+          "rbp",
+          "r13",
+          "rbx",
+          "rcx",
+          "r8",
+          "edx",
+          "ebx",
+          "rsp",
+          "r9",
+          "rdi",
+          "rdx",
+          "xmm1",
+          "r14d",
+          "r13d",
+          "r8d",
+          "rax",
+          "r14",
+          "eax",
+          "r14b",
+          "rsi"
+        ]
+      }
+    },
+    "sub_32c0": {
+      "address": 12992,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 306,
+      "complexity_score": 380,
+      "complete_analysis": {
+        "basic_blocks": 20,
+        "api_calls": 25,
+        "control_flow": {
+          "calls": 25,
+          "jumps": 39,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "ecx",
+          "xmm0",
+          "r9d",
+          "rbp",
+          "r13",
+          "rbx",
+          "rcx",
+          "r8",
+          "edx",
+          "ebx",
+          "rsp",
+          "r9",
+          "rdi",
+          "rdx",
+          "xmm1",
+          "r14d",
+          "r13d",
+          "r8d",
+          "rax",
+          "r14",
+          "eax",
+          "rsi"
+        ]
+      }
+    },
+    "sub_33a8": {
+      "address": 13224,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 263,
+      "complexity_score": 327,
+      "complete_analysis": {
+        "basic_blocks": 16,
+        "api_calls": 21,
+        "control_flow": {
+          "calls": 21,
+          "jumps": 33,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "ecx",
+          "xmm0",
+          "r9d",
+          "rbp",
+          "r13",
+          "rbx",
+          "rcx",
+          "r8",
+          "edx",
+          "ebx",
+          "rsp",
+          "r9",
+          "rdi",
+          "rdx",
+          "xmm1",
+          "r14d",
+          "r13d",
+          "r8d",
+          "rax",
+          "r14",
+          "eax",
+          "rsi"
+        ]
+      }
+    },
+    "sub_3430": {
+      "address": 13360,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 214,
+      "complexity_score": 264,
+      "complete_analysis": {
+        "basic_blocks": 11,
+        "api_calls": 17,
+        "control_flow": {
+          "calls": 17,
+          "jumps": 23,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "ecx",
+          "xmm0",
+          "r9d",
+          "rbp",
+          "r13",
+          "rbx",
+          "rcx",
+          "r8",
+          "edx",
+          "ebx",
+          "rsp",
+          "r9",
+          "rdi",
+          "rdx",
+          "xmm1",
+          "r14d",
+          "r13d",
+          "r8d",
+          "rax",
+          "r14",
+          "eax",
+          "rsi"
+        ]
+      }
+    },
+    "sub_36de": {
+      "address": 14046,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 173,
+      "complexity_score": 213,
+      "complete_analysis": {
+        "basic_blocks": 9,
+        "api_calls": 13,
+        "control_flow": {
+          "calls": 13,
+          "jumps": 18,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "ecx",
+          "xmm0",
+          "r9d",
+          "rbp",
+          "r13",
+          "rbx",
+          "rcx",
+          "r8",
+          "edx",
+          "ebx",
+          "rsp",
+          "r9",
+          "rdi",
+          "rdx",
+          "xmm1",
+          "r14d",
+          "r13d",
+          "r8d",
+          "rax",
+          "r14",
+          "eax",
+          "rsi"
+        ]
+      }
+    },
+    "sub_3818": {
+      "address": 14360,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 16,
+      "complexity_score": 20,
+      "complete_analysis": {
+        "basic_blocks": 1,
+        "api_calls": 2,
+        "control_flow": {
+          "calls": 2,
+          "jumps": 1,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 48,
+        "register_usage": [
+          "rcx",
+          "rsp",
+          "rax",
+          "rbx"
+        ]
+      }
+    },
+    "sub_381e": {
+      "address": 14366,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 14,
+      "complexity_score": 18,
+      "complete_analysis": {
+        "basic_blocks": 1,
+        "api_calls": 2,
+        "control_flow": {
+          "calls": 2,
+          "jumps": 1,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 48,
+        "register_usage": [
+          "rcx",
+          "rsp",
+          "rax",
+          "rbx"
+        ]
+      }
+    },
+    "sub_3858": {
+      "address": 14424,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 66,
+      "complexity_score": 78,
+      "complete_analysis": {
+        "basic_blocks": 5,
+        "api_calls": 2,
+        "control_flow": {
+          "calls": 2,
+          "jumps": 8,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "rdx",
+          "r14",
+          "rcx",
+          "eax",
+          "r8",
+          "r9d",
+          "rbp",
+          "edx",
+          "rsp",
+          "ebp",
+          "rbx",
+          "r9",
+          "rdi",
+          "r8d",
+          "rsi"
+        ]
+      }
+    },
+    "sub_3866": {
+      "address": 14438,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 61,
+      "complexity_score": 73,
+      "complete_analysis": {
+        "basic_blocks": 5,
+        "api_calls": 2,
+        "control_flow": {
+          "calls": 2,
+          "jumps": 8,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 48,
+        "register_usage": [
+          "rdx",
+          "r14",
+          "rcx",
+          "eax",
+          "r8",
+          "r9d",
+          "edx",
+          "rbp",
+          "rsp",
+          "ebp",
+          "rbx",
+          "r9",
+          "rdi",
+          "r8d",
+          "rsi"
+        ]
+      }
+    },
+    "sub_38cc": {
+      "address": 14540,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 42,
+      "complexity_score": 50,
+      "complete_analysis": {
+        "basic_blocks": 5,
+        "api_calls": 1,
+        "control_flow": {
+          "calls": 1,
+          "jumps": 7,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "rdx",
+          "rcx",
+          "r14",
+          "eax",
+          "r8",
+          "r9d",
+          "edx",
+          "rbp",
+          "rsp",
+          "ebp",
+          "rbx",
+          "r9",
+          "rdi",
+          "r8d",
+          "rsi"
+        ]
+      }
+    },
+    "sub_395e": {
+      "address": 14686,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 20,
+      "complexity_score": 24,
+      "complete_analysis": {
+        "basic_blocks": 3,
+        "api_calls": 0,
+        "control_flow": {
+          "calls": 0,
+          "jumps": 4,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 32,
+        "register_usage": [
+          "rcx",
+          "rsp",
+          "edx",
+          "rbx"
+        ]
+      }
+    },
+    "sub_39ac": {
+      "address": 14764,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 23,
+      "complexity_score": 29,
+      "complete_analysis": {
+        "basic_blocks": 2,
+        "api_calls": 2,
+        "control_flow": {
+          "calls": 2,
+          "jumps": 2,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 32,
+        "register_usage": [
+          "rdx",
+          "rcx",
+          "rsp",
+          "rbx",
+          "rdi",
+          "rsi"
+        ]
+      }
+    },
+    "sub_39b7": {
+      "address": 14775,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 20,
+      "complexity_score": 26,
+      "complete_analysis": {
+        "basic_blocks": 2,
+        "api_calls": 2,
+        "control_flow": {
+          "calls": 2,
+          "jumps": 2,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 32,
+        "register_usage": [
+          "rdx",
+          "rcx",
+          "rsp",
+          "rbx",
+          "rdi",
+          "rsi"
+        ]
+      }
+    },
+    "sub_3a0a": {
+      "address": 14858,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 40,
+      "complexity_score": 48,
+      "complete_analysis": {
+        "basic_blocks": 5,
+        "api_calls": 3,
+        "control_flow": {
+          "calls": 3,
+          "jumps": 7,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 32,
+        "register_usage": [
+          "rcx",
+          "edx",
+          "rsp",
+          "rbx",
+          "rdi",
+          "rax"
+        ]
+      }
+    },
+    "sub_3a2c": {
+      "address": 14892,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 21,
+      "complexity_score": 23,
+      "complete_analysis": {
+        "basic_blocks": 2,
+        "api_calls": 1,
+        "control_flow": {
+          "calls": 1,
+          "jumps": 3,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 32,
+        "register_usage": [
+          "dil",
+          "r8",
+          "cl",
+          "dl",
+          "rsp",
+          "rbx",
+          "rdi",
+          "rax"
+        ]
+      }
+    },
+    "sub_3a32": {
+      "address": 14898,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 19,
+      "complexity_score": 21,
+      "complete_analysis": {
+        "basic_blocks": 2,
+        "api_calls": 1,
+        "control_flow": {
+          "calls": 1,
+          "jumps": 3,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 32,
+        "register_usage": [
+          "dil",
+          "r8",
+          "cl",
+          "dl",
+          "rsp",
+          "rbx",
+          "rdi",
+          "rax"
+        ]
+      }
+    },
+    "sub_3a82": {
+      "address": 14978,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 23,
+      "complexity_score": 25,
+      "complete_analysis": {
+        "basic_blocks": 2,
+        "api_calls": 1,
+        "control_flow": {
+          "calls": 1,
+          "jumps": 2,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 32,
+        "register_usage": [
+          "rcx",
+          "eax",
+          "xmm0",
+          "rsp",
+          "rdi",
+          "rax"
+        ]
+      }
+    },
+    "sub_3b0c": {
+      "address": 15116,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 86,
+      "complexity_score": 94,
+      "complete_analysis": {
+        "basic_blocks": 5,
+        "api_calls": 2,
+        "control_flow": {
+          "calls": 2,
+          "jumps": 17,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 64,
+        "register_usage": [
+          "ax",
+          "rdx",
+          "rcx",
+          "r8",
+          "eax",
+          "si",
+          "rax",
+          "r9d",
+          "edx",
+          "rbp",
+          "rsp",
+          "ebx",
+          "rbx",
+          "r9",
+          "rdi",
+          "esi",
+          "rsi"
+        ]
+      }
+    },
+    "sub_3c51": {
+      "address": 15441,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 29,
+      "complexity_score": 31,
+      "complete_analysis": {
+        "basic_blocks": 2,
+        "api_calls": 0,
+        "control_flow": {
+          "calls": 0,
+          "jumps": 3,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 88,
+        "register_usage": [
+          "rdx",
+          "r8",
+          "eax",
+          "r9d",
+          "edx",
+          "rsp",
+          "r9w",
+          "r9",
+          "r8d",
+          "rax"
+        ]
+      }
+    },
+    "sub_3cea": {
+      "address": 15594,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 70,
+      "complexity_score": 78,
+      "complete_analysis": {
+        "basic_blocks": 3,
+        "api_calls": 4,
+        "control_flow": {
+          "calls": 4,
+          "jumps": 8,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "al",
+          "rdx",
+          "rcx",
+          "r14",
+          "r15",
+          "r8",
+          "edi",
+          "ecx",
+          "rax",
+          "xmm0",
+          "eax",
+          "rsp",
+          "rbx",
+          "rdi",
+          "rsi"
+        ]
+      }
+    },
+    "sub_3cf6": {
+      "address": 15606,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 64,
+      "complexity_score": 72,
+      "complete_analysis": {
+        "basic_blocks": 3,
+        "api_calls": 4,
+        "control_flow": {
+          "calls": 4,
+          "jumps": 8,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 48,
+        "register_usage": [
+          "al",
+          "rdx",
+          "r15",
+          "r8",
+          "rcx",
+          "r14",
+          "edi",
+          "ecx",
+          "rax",
+          "xmm0",
+          "eax",
+          "rsp",
+          "rbx",
+          "rdi",
+          "rsi"
+        ]
+      }
+    },
+    "sub_3d53": {
+      "address": 15699,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 38,
+      "complexity_score": 44,
+      "complete_analysis": {
+        "basic_blocks": 2,
+        "api_calls": 3,
+        "control_flow": {
+          "calls": 3,
+          "jumps": 5,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 0,
+        "register_usage": [
+          "rdx",
+          "r14",
+          "rcx",
+          "ecx",
+          "eax",
+          "edi",
+          "r8",
+          "r15",
+          "rsi",
+          "rsp",
+          "rbx",
+          "rdi",
+          "rax"
+        ]
+      }
+    },
+    "sub_3de4": {
+      "address": 15844,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 23,
+      "complexity_score": 25,
+      "complete_analysis": {
+        "basic_blocks": 2,
+        "api_calls": 1,
+        "control_flow": {
+          "calls": 1,
+          "jumps": 2,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 40,
+        "register_usage": [
+          "rcx",
+          "eax",
+          "xmm0",
+          "rsp",
+          "rax"
+        ]
+      }
+    },
+    "sub_3e68": {
+      "address": 15976,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 7,
+      "complexity_score": 9,
+      "complete_analysis": {
+        "basic_blocks": 1,
+        "api_calls": 1,
+        "control_flow": {
+          "calls": 1,
+          "jumps": 0,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 56,
+        "register_usage": [
+          "rsp",
+          "rax"
+        ]
+      }
+    },
+    "sub_3e98": {
+      "address": 16024,
+      "type": "discovered",
+      "purpose": "wrapper_function",
+      "instruction_count": 26,
+      "complexity_score": 32,
+      "complete_analysis": {
+        "basic_blocks": 1,
+        "api_calls": 3,
+        "control_flow": {
+          "calls": 3,
+          "jumps": 0,
+          "returns": 1
+        },
+        "local_variables": 0,
+        "stack_frame_size": 96,
+        "register_usage": [
+          "r11",
+          "rcx",
+          "eax",
+          "ecx",
+          "edx",
+          "rbp",
+          "rsp",
+          "ebx",
+          "rsi",
+          "rbx",
+          "rdi",
+          "esi",
+          "rax"
+        ]
+      }
+    }
+  }
+}
