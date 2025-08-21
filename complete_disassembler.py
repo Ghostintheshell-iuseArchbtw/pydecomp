@@ -574,17 +574,25 @@ class CompleteCodeGenerator:
         """Generate labels for jump targets."""
         labels = {}
         
+        # Collect all jump targets from instructions
+        jump_targets = set()
+        
         for block in func_info['basic_blocks']:
             for insn in block['instructions']:
                 jump_target = insn.get('jump_target')
                 if jump_target and isinstance(jump_target, int):
-                    labels[jump_target] = f"label_{self._safe_hex_format(jump_target)}"
+                    jump_targets.add(jump_target)
                 elif jump_target and isinstance(jump_target, str):
                     try:
                         target_int = int(jump_target, 16) if jump_target.startswith('0x') else int(jump_target)
-                        labels[target_int] = f"label_{self._safe_hex_format(target_int)}"
+                        jump_targets.add(target_int)
                     except (ValueError, TypeError):
                         pass
+        
+        # Generate label names for all targets
+        for target in jump_targets:
+            addr_str = self._safe_hex_format(target)[2:]  # Remove '0x' prefix
+            labels[target] = f"label_{addr_str}"
         
         return labels
     
@@ -732,14 +740,17 @@ class CompleteCodeGenerator:
         """Translate CALL instruction."""
         call_target = insn.get('call_target')
         if call_target and isinstance(call_target, int):
-            return f"call_function_{self._safe_hex_format(call_target)}();"
+            # Generate a safe function name
+            addr_str = self._safe_hex_format(call_target)[2:]  # Remove '0x' prefix
+            return f"sub_{addr_str}();  // Call to function at {self._safe_hex_format(call_target)}"
         elif call_target and isinstance(call_target, str):
             try:
                 target_int = int(call_target, 16) if call_target.startswith('0x') else int(call_target)
-                return f"call_function_{self._safe_hex_format(target_int)}();"
+                addr_str = self._safe_hex_format(target_int)[2:]  # Remove '0x' prefix
+                return f"sub_{addr_str}();  // Call to function at {self._safe_hex_format(target_int)}"
             except (ValueError, TypeError):
                 pass
-        return "// Function call"
+        return "// Function call (target unknown)"
     
     def _translate_ret(self, insn: Dict) -> str:
         """Translate RET instruction."""
@@ -750,14 +761,16 @@ class CompleteCodeGenerator:
         condition = self._jump_to_condition(insn['mnemonic'])
         target = insn.get('jump_target', 0)
         if isinstance(target, int):
-            return f"if ({condition}) goto label_{self._safe_hex_format(target)};"
+            addr_str = self._safe_hex_format(target)[2:]  # Remove '0x' prefix
+            return f"if ({condition}) goto label_{addr_str};  // Jump to {self._safe_hex_format(target)}"
         elif isinstance(target, str):
             try:
                 target_int = int(target, 16) if target.startswith('0x') else int(target)
-                return f"if ({condition}) goto label_{self._safe_hex_format(target_int)};"
+                addr_str = self._safe_hex_format(target_int)[2:]  # Remove '0x' prefix
+                return f"if ({condition}) goto label_{addr_str};  // Jump to {self._safe_hex_format(target_int)}"
             except (ValueError, TypeError):
                 pass
-        return f"if ({condition}) goto label_unknown;"
+        return f"// Conditional jump (target unknown)"
     
     def _translate_push(self, insn: Dict) -> str:
         """Translate PUSH instruction."""
@@ -821,14 +834,16 @@ class CompleteCodeGenerator:
         """Translate JMP instruction."""
         target = insn.get('jump_target', 0)
         if isinstance(target, int):
-            return f"goto label_{self._safe_hex_format(target)};"
+            addr_str = self._safe_hex_format(target)[2:]  # Remove '0x' prefix
+            return f"goto label_{addr_str};  // Jump to {self._safe_hex_format(target)}"
         elif isinstance(target, str):
             try:
                 target_int = int(target, 16) if target.startswith('0x') else int(target)
-                return f"goto label_{self._safe_hex_format(target_int)};"
+                addr_str = self._safe_hex_format(target_int)[2:]  # Remove '0x' prefix
+                return f"goto label_{addr_str};  // Jump to {self._safe_hex_format(target_int)}"
             except (ValueError, TypeError):
                 pass
-        return "goto label_unknown;"
+        return "// Unconditional jump (target unknown)"
     
     def _translate_and(self, insn: Dict) -> str:
         """Translate AND instruction."""

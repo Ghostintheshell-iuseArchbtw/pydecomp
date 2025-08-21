@@ -1,26 +1,27 @@
 #!/usr/bin/env python3
 """
-Enhanced Binary Disassembler and C/C++ Recreation Tool
-Author: AI Assistant
-Date: June 24, 2025
-
-This enhanced version includes advanced pattern recognition, data structure analysis,
-and improved code generation capabilities.
+Enhanced Binary Disassembler and Code Generator
+Analyzes PE files and generates C/C++ recreations
 """
 
 import os
 import sys
-import argparse
-import pefile
-import capstone
-from pathlib import Path
 import json
-from typing import Dict, List, Tuple, Optional
+import argparse
 import re
+from pathlib import Path
+from datetime import datetime
+from typing import Dict, List, Optional, Any
+
+import pefile
+from capstone import *
 
 from pattern_analyzer import PatternMatcher, DataStructureAnalyzer
+from enhanced_pattern_analyzer import AdvancedPatternMatcher, EnhancedDataStructureAnalyzer
 from code_generator import CodeGenerator
-from complete_disassembler import AdvancedDisassembler, CompleteCodeGenerator
+from enhanced_code_generator import EnhancedCodeGenerator
+from perfect_c_generator import PerfectCCodeGenerator
+from complete_disassembler import CompleteCodeGenerator, AdvancedDisassembler
 
 
 class EnhancedBinaryAnalyzer:
@@ -50,10 +51,10 @@ class EnhancedBinaryAnalyzer:
             
             # Initialize disassembler based on architecture
             if self.pe.FILE_HEADER.Machine == pefile.MACHINE_TYPE['IMAGE_FILE_MACHINE_AMD64']:
-                self.disassembler = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_64)
+                self.disassembler = Cs(CS_ARCH_X86, CS_MODE_64)
                 self.arch = 'x64'
             elif self.pe.FILE_HEADER.Machine == pefile.MACHINE_TYPE['IMAGE_FILE_MACHINE_I386']:
-                self.disassembler = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+                self.disassembler = Cs(CS_ARCH_X86, CS_MODE_32)
                 self.arch = 'x86'
             else:
                 print(f"Unsupported architecture: {self.pe.FILE_HEADER.Machine}")
@@ -336,11 +337,11 @@ class EnhancedBinaryAnalyzer:
                             'type': op.type,
                             'size': op.size
                         }
-                        if op.type == capstone.CS_OP_REG:
+                        if op.type == CS_OP_REG:
                             op_info['reg'] = insn.reg_name(op.reg)
-                        elif op.type == capstone.CS_OP_IMM:
+                        elif op.type == CS_OP_IMM:
                             op_info['imm'] = op.imm
-                        elif op.type == capstone.CS_OP_MEM:
+                        elif op.type == CS_OP_MEM:
                             op_info['mem'] = {
                                 'base': insn.reg_name(op.mem.base) if op.mem.base else None,
                                 'index': insn.reg_name(op.mem.index) if op.mem.index else None,
@@ -502,17 +503,189 @@ class EnhancedCppGenerator:
     def __init__(self, analyzer: EnhancedBinaryAnalyzer):
         self.analyzer = analyzer
         self.code_gen = CodeGenerator()
+        self.defined_functions = set()  # Track defined functions to avoid undefined references
+        self.defined_labels = set()     # Track defined labels to avoid undefined references
+    
+    def _safe_hex_format(self, value, default=0) -> str:
+        """Safely format a value as hexadecimal, handling str and int inputs."""
+        if value is None:
+            value = default
+        
+        if isinstance(value, str):
+            try:
+                if value.startswith('0x'):
+                    value = int(value, 16)
+                else:
+                    value = int(value, 16) if all(c in '0123456789abcdefABCDEF' for c in value) else int(value)
+            except (ValueError, TypeError):
+                value = default
+        
+        # Ensure it's an integer
+        value = int(value)
+        return f"0x{value:x}"
+    
+    def _generate_safe_function_name(self, address) -> str:
+        """Generate a safe function name from an address."""
+        addr_str = self._safe_hex_format(address)[2:]  # Remove '0x' prefix
+        return f"sub_{addr_str}"
+    
+    def _generate_safe_label_name(self, address) -> str:
+        """Generate a safe label name from an address."""
+        addr_str = self._safe_hex_format(address)[2:]  # Remove '0x' prefix
+        return f"label_{addr_str}"
+    
+    def _add_platform_abstraction_layer(self) -> List[str]:
+        """Add platform abstraction macros for cross-platform compatibility."""
+        return [
+            "#ifdef _WIN32",
+            "#include <windows.h>",
+            "#else",
+            "// Linux equivalents or stubs",
+            "typedef void* HANDLE;",
+            "#define WINAPI",
+            "#endif",
+            ""
+        ]
+    
+    def _add_memory_simulation_helpers(self) -> List[str]:
+        """Add helper functions for memory simulation."""
+        return [
+            "// Memory simulation helper functions",
+            "static inline uint8_t memory_read_8(void* addr) {",
+            "    return *((uint8_t*)addr);",
+            "}",
+            "",
+            "static inline uint16_t memory_read_16(void* addr) {",
+            "    return *((uint16_t*)addr);",
+            "}",
+            "",
+            "static inline uint32_t memory_read_32(void* addr) {",
+            "    return *((uint32_t*)addr);",
+            "}",
+            "",
+            "static inline void memory_write_8(void* addr, uint8_t value) {",
+            "    *((uint8_t*)addr) = value;",
+            "}",
+            "",
+            "static inline void memory_write_16(void* addr, uint16_t value) {",
+            "    *((uint16_t*)addr) = value;",
+            "}",
+            "",
+            "static inline void memory_write_32(void* addr, uint32_t value) {",
+            "    *((uint32_t*)addr) = value;",
+            "}",
+            ""
+        ]
+    
+    def _infer_enhanced_function_signature(self, func_name: str, func_info: Dict) -> str:
+        """Infer enhanced function signature with better parameter and return type detection."""
+        
+        # For exported functions, try to preserve original signature if available
+        if func_info['type'] == 'exported' and 'original_signature' in func_info:
+            return func_info['original_signature']
+        
+        # Analyze calling convention and parameters
+        params = self._infer_function_parameters(func_info)
+        return_type = self._infer_return_type(func_info)
+        
+        # Generate parameter string
+        param_strs = []
+        for i, param in enumerate(params):
+            param_strs.append(f"{param['type']} {param['name']}")
+        
+        param_list = ", ".join(param_strs) if param_strs else "void"
+        
+        # Determine calling convention (use stdcall for Windows exports, cdecl for others)
+        if func_info['type'] == 'exported':
+            calling_conv = "__stdcall"
+        else:
+            calling_conv = "__cdecl"
+        
+        return f"{return_type} {calling_conv} {func_name}({param_list})"
+    
+    def _infer_function_parameters(self, func_info: Dict) -> List[Dict]:
+        """Infer function parameters from analysis."""
+        params = []
+        
+        # Check if we have complete analysis data
+        if 'complete_analysis' in func_info:
+            analysis = func_info['complete_analysis']
+            if 'parameters' in analysis:
+                # Use parameters from complete analysis
+                for i, param_info in enumerate(analysis['parameters']):
+                    params.append({
+                        'name': param_info.get('name', f'param{i+1}'),
+                        'type': param_info.get('type', 'void*')
+                    })
+                return params
+        
+        # Fallback to basic parameter inference
+        # Look at function characteristics for hints
+        characteristics = func_info.get('characteristics', {})
+        
+        # Estimate parameter count based on function complexity
+        complexity = characteristics.get('complexity_score', 0)
+        if complexity > 50:
+            param_count = 3
+        elif complexity > 20:
+            param_count = 2
+        elif complexity > 5:
+            param_count = 1
+        else:
+            param_count = 0
+        
+        # Generate generic parameters
+        for i in range(param_count):
+            params.append({
+                'name': f'param{i+1}',
+                'type': 'void*'  # Generic pointer type as default
+            })
+        
+        return params
+    
+    def _infer_return_type(self, func_info: Dict) -> str:
+        """Infer function return type from analysis."""
+        
+        # Check if we have complete analysis data
+        if 'complete_analysis' in func_info:
+            analysis = func_info['complete_analysis']
+            if 'return_type' in analysis:
+                return analysis['return_type']
+        
+        # Fallback to basic return type inference
+        purpose = func_info.get('purpose', 'unknown')
+        characteristics = func_info.get('characteristics', {})
+        
+        # Determine return type based on function purpose
+        if purpose in ['cleanup', 'setter']:
+            return 'void'
+        elif purpose in ['validation', 'checker']:
+            return 'bool'
+        elif purpose in ['getter', 'data_processing']:
+            # Check if function accesses memory (likely returns a value)
+            if characteristics.get('memory_access_count', 0) > 0:
+                return 'uint32_t'
+            else:
+                return 'int'
+        elif 'string' in purpose:
+            return 'char*'
+        else:
+            # Default to int for general functions
+            return 'int'
     
     def generate_header_file(self) -> str:
         """Generate comprehensive header file."""
         header_lines = [
             f"// Generated header for {self.analyzer.binary_path.name}",
-            f"// Generated on: June 24, 2025",
+            f"// Generated on: {datetime.now().strftime('%Y-%m-%d')}",
             f"// Architecture: {self.analyzer.arch}",
             f"// Original file: {self.analyzer.binary_path}",
             "",
             "#pragma once",
         ]
+        
+        # Add platform abstraction layer
+        header_lines.extend(self._add_platform_abstraction_layer())
         
         # Add includes
         includes = self.code_gen.generate_include_statements(
@@ -534,14 +707,26 @@ class EnhancedCppGenerator:
         # Add function declarations
         header_lines.extend([
             "// Function Declarations",
-            "extern \"C\" {",
+            'extern "C" {',
         ])
         
+        # Track declared functions
+        declared_functions = set()
+        
         for func_name, func_info in self.analyzer.functions.items():
+            # Use proper function name
+            if func_info['type'] == 'exported':
+                actual_name = func_name
+            else:
+                # For discovered functions, use address-based names
+                addr = func_info.get('address', 0)
+                actual_name = self._generate_safe_function_name(addr)
+            
             signature = self.code_gen.generate_function_signature(
-                func_name, func_info['instructions'], func_info['purpose']
+                actual_name, func_info['instructions'], func_info['purpose']
             )
             header_lines.append(f"    {signature};")
+            declared_functions.add(actual_name)
         
         header_lines.extend([
             "}",
@@ -555,13 +740,16 @@ class EnhancedCppGenerator:
         """Generate comprehensive C++ implementation."""
         cpp_lines = [
             f"// Generated C++ recreation of {self.analyzer.binary_path.name}",
-            f"// Generated on: June 24, 2025",
+            f"// Generated on: {datetime.now().strftime('%Y-%m-%d')}",
             f"// Architecture: {self.analyzer.arch}",
             f"// Total functions analyzed: {len(self.analyzer.functions)}",
             "",
             f"#include \"{self.analyzer.binary_path.stem}.h\"",
             "",
         ]
+        
+        # Add memory simulation helper functions
+        cpp_lines.extend(self._add_memory_simulation_helpers())
         
         # Sort functions by type and complexity
         exported_funcs = []
@@ -577,14 +765,20 @@ class EnhancedCppGenerator:
         exported_funcs.sort(key=lambda x: x[1]['characteristics'].get('complexity_score', 0))
         discovered_funcs.sort(key=lambda x: x[1]['characteristics'].get('complexity_score', 0))
         
+        # Track defined functions to avoid undefined references
+        self.defined_functions = set()
+        
         # Generate exported functions first
         if exported_funcs:
             cpp_lines.append("// ============ EXPORTED FUNCTIONS ============")
             cpp_lines.append("")
             
             for func_name, func_info in exported_funcs:
-                cpp_lines.append(self.generate_enhanced_function(func_name, func_info))
+                func_code = self.generate_enhanced_function(func_name, func_info)
+                cpp_lines.append(func_code)
                 cpp_lines.append("")
+                # Track defined functions
+                self.defined_functions.add(func_name)
         
         # Generate discovered functions
         if discovered_funcs:
@@ -595,8 +789,14 @@ class EnhancedCppGenerator:
             for func_name, func_info in discovered_funcs[:20]:  # Limit output
                 complexity = func_info['characteristics'].get('complexity_score', 0)
                 if complexity > 10:  # Only include substantial functions
-                    cpp_lines.append(self.generate_enhanced_function(func_name, func_info))
+                    # Generate safe function name for discovered functions
+                    addr = func_info.get('address', 0)
+                    safe_name = self._generate_safe_function_name(addr)
+                    func_code = self.generate_enhanced_function(safe_name, func_info)
+                    cpp_lines.append(func_code)
                     cpp_lines.append("")
+                    # Track defined functions
+                    self.defined_functions.add(safe_name)
         
         return "\n".join(cpp_lines)
     
@@ -622,10 +822,8 @@ class EnhancedCppGenerator:
                         print(f"Basic blocks: {len(analysis['basic_blocks'])}")
                 # Fall back to basic generation
         
-        # Fall back to basic code generation
-        signature = self.code_gen.generate_function_signature(
-            func_name, func_info['instructions'], func_info['purpose']
-        )
+        # Fall back to basic code generation with enhanced signature
+        signature = self._infer_enhanced_function_signature(func_name, func_info)
         
         code_lines = [signature + " {"]
         
@@ -635,16 +833,48 @@ class EnhancedCppGenerator:
             func_info['purpose'], func_info['characteristics']
         )
         
-        code_lines.extend(body_lines)
+        # Fix undefined references in the body
+        fixed_body_lines = self._fix_undefined_references(body_lines)
+        
+        code_lines.extend(fixed_body_lines)
         code_lines.append("}")
         
         return "\n".join(code_lines)
+    
+    def _fix_undefined_references(self, body_lines: List[str]) -> List[str]:
+        """Fix undefined references in generated code."""
+        fixed_lines = []
+        
+        for line in body_lines:
+            # Fix undefined label references
+            if "goto label_unknown" in line:
+                # Replace with a comment or a safe default
+                fixed_lines.append("    // TODO: Unresolved jump target")
+                continue
+            
+            # Fix undefined function calls
+            import re
+            call_pattern = r"call_function_(0x[0-9a-fA-F]+)"
+            match = re.search(call_pattern, line)
+            if match:
+                addr = match.group(1)
+                func_name = f"sub_{addr[2:]}"  # Remove '0x' prefix
+                # Check if function is defined, if not add a forward declaration comment
+                if func_name not in self.defined_functions:
+                    fixed_lines.append(f"    // Forward call to undefined function at {addr}")
+                    fixed_lines.append(f"    // TODO: Implement {func_name}()")
+                else:
+                    line = line.replace(f"call_function_{addr}", func_name)
+            
+            fixed_lines.append(line)
+        
+        return fixed_lines
     
     def generate_analysis_report(self) -> str:
         """Generate comprehensive analysis report."""
         report_lines = [
             f"COMPREHENSIVE BINARY ANALYSIS REPORT",
-            f"{'=' * 80}",
+            f"{ '=' * 80}",
             f"File: {self.analyzer.binary_path}",
             f"Analysis Date: June 24, 2025",
             f"Architecture: {self.analyzer.arch}",
@@ -659,7 +889,7 @@ class EnhancedCppGenerator:
         # Section analysis
         report_lines.extend([
             f"SECTIONS ({len(self.analyzer.sections)}):",
-            f"{'Name':<12} {'Purpose':<20} {'Size':<10} {'Entropy':<8} {'Characteristics'}",
+            f"{ 'Name':<12} {'Purpose':<20} {'Size':<10} {'Entropy':<8} {'Characteristics'}",
             f"{'-'*80}",
         ])
         
@@ -752,12 +982,13 @@ def main():
         epilog="""
 Examples:
   python enhanced_disassembler.py sample.dll
-  python enhanced_disassembler.py driver.sys --output analysis --report --build-files
+  python enhanced_disassembler.py driver..sys --output analysis --report --build-files
   python enhanced_disassembler.py malware.exe --strings --detailed
         """
     )
     
     parser.add_argument("binary_path", help="Path to the binary file (.dll, .sys, .exe)")
+    parser.add_argument('--target', choices=['windows','portable'], default='windows', help='Codegen target platform (use portable for non-Windows CI/tests)')
     parser.add_argument("-o", "--output", help="Output directory", default="output")
     parser.add_argument("--report", action="store_true", help="Generate detailed analysis report")
     parser.add_argument("--strings", action="store_true", help="Extract and analyze strings")
