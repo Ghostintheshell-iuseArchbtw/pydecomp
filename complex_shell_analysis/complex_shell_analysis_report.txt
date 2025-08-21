@@ -1,0 +1,30 @@
+COMPREHENSIVE BINARY ANALYSIS REPORT
+================================================================================
+File: /home/alice/Desktop/pydecomp/test_binaries/complex_shell.exe
+Analysis Date: June 24, 2025
+Architecture: x64
+
+BASIC PE INFORMATION:
+  Entry Point: 0x4000
+  Image Base: 0x140000000
+  File Size: 7168 bytes
+
+SECTIONS (3):
+Name         Purpose              Size       Entropy  Characteristics
+--------------------------------------------------------------------------------
+.text        executable_code      4174       0.17     0x60000020
+.rdata       read_only_data       132        0.96     0x40000040
+.ghyq        executable_code      584        4.03     0xe0000020
+
+IMPORTS (1 DLLs, 2 functions):
+  kernel32.dll: 2 functions
+    - VirtualAlloc (memory_operations)
+    - ExitProcess (general)
+
+EXPORTS (0 functions):
+
+FUNCTION ANALYSIS (1 functions analyzed):
+  wrapper_function: 1 functions
+    Average complexity: 1007.0
+
+STRINGS (17 found):

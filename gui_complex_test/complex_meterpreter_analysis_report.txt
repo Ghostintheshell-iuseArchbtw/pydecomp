@@ -1,0 +1,35 @@
+Binary Analysis Report
+=====================
+
+File: complex_meterpreter.dll
+Analysis Date: 2025-08-21T07:15:45.483025
+Output Directory: gui_complex_test
+
+PE File Information:
+  Architecture: x64
+  File Size: 9,216 bytes
+  Timestamp: 2023-02-02T17:41:24
+
+Section Analysis:
+  Total Sections: 5
+    .text: 919 bytes (entropy: 4.59)
+    .rdata: 880 bytes (entropy: 3.65)
+    .data: 4,661 bytes (entropy: 1.19)
+    .pdata: 48 bytes (entropy: 0.42)
+    .rsrc: 224 bytes (entropy: 1.03)
+
+Import Analysis:
+  Imported DLLs: 1
+  Imported Functions: 13
+
+Export Analysis:
+  Exported Functions: 0
+
+Function Analysis:
+  Identified Functions: 5
+  Function Categories:
+    unknown: 5
+
+String Analysis:
+  Extracted Strings: 64
+

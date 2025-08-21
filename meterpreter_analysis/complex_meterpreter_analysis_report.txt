@@ -1,0 +1,40 @@
+COMPREHENSIVE BINARY ANALYSIS REPORT
+================================================================================
+File: /home/alice/Desktop/pydecomp/test_binaries/complex_meterpreter.dll
+Analysis Date: June 24, 2025
+Architecture: x64
+
+BASIC PE INFORMATION:
+  Entry Point: 0x1220
+  Image Base: 0x180000000
+  File Size: 9216 bytes
+
+SECTIONS (5):
+Name         Purpose              Size       Entropy  Characteristics
+--------------------------------------------------------------------------------
+.text        executable_code      919        4.59     0x60000020
+.rdata       read_only_data       880        3.65     0x40000040
+.data        initialized_data     4661       1.19     0xc0000040
+.pdata       exception_data       48         0.42     0x40000040
+.rsrc        resources            224        1.03     0x40000040
+
+IMPORTS (1 DLLs, 13 functions):
+  kernel32.dll: 13 functions
+    - CloseHandle (file_operations)
+    - ReleaseSemaphore (general)
+    - WaitForSingleObject (general)
+    - CreateEventA (general)
+    - OpenEventA (general)
+    ... and 8 more
+
+EXPORTS (0 functions):
+
+FUNCTION ANALYSIS (5 functions analyzed):
+  unknown: 2 functions
+    Average complexity: 23.5
+  wrapper_function: 2 functions
+    Average complexity: 15.5
+  data_processing: 1 functions
+    Average complexity: 105.0
+
+STRINGS (64 found):

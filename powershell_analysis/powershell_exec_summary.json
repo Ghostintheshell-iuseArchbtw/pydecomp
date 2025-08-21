@@ -1,0 +1,17 @@
+{
+  "file_info": {
+    "path": "/home/alice/Desktop/pydecomp/test_binaries/powershell_exec.exe",
+    "architecture": "x64",
+    "size_bytes": 6656
+  },
+  "analysis_stats": {
+    "sections": 3,
+    "imports": 2,
+    "exports": 0,
+    "functions_analyzed": 1,
+    "strings_found": 13
+  },
+  "function_purposes": {
+    "wrapper_function": 1
+  }
+}

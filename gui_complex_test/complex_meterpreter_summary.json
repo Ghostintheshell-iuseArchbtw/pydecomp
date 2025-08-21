@@ -1,0 +1,261 @@
+{
+  "pe_info": {
+    "filename": "complex_meterpreter.dll",
+    "size": 9216,
+    "architecture": "x64",
+    "timestamp": "2023-02-02T17:41:24"
+  },
+  "sections": {
+    "count": 5,
+    "details": [
+      {
+        "name": ".text",
+        "virtual_address": "0x1000",
+        "virtual_size": 919,
+        "raw_size": 1024,
+        "characteristics": "0x60000020",
+        "entropy": 4.593991789385223
+      },
+      {
+        "name": ".rdata",
+        "virtual_address": "0x2000",
+        "virtual_size": 880,
+        "raw_size": 1024,
+        "characteristics": "0x40000040",
+        "entropy": 3.650663735874664
+      },
+      {
+        "name": ".data",
+        "virtual_address": "0x3000",
+        "virtual_size": 4661,
+        "raw_size": 5120,
+        "characteristics": "0xc0000040",
+        "entropy": 1.1935641361839986
+      },
+      {
+        "name": ".pdata",
+        "virtual_address": "0x5000",
+        "virtual_size": 48,
+        "raw_size": 512,
+        "characteristics": "0x40000040",
+        "entropy": 0.4200405112339012
+      },
+      {
+        "name": ".rsrc",
+        "virtual_address": "0x6000",
+        "virtual_size": 224,
+        "raw_size": 512,
+        "characteristics": "0x40000040",
+        "entropy": 1.0288085502979787
+      }
+    ]
+  },
+  "imports": {
+    "dll_count": 1,
+    "function_count": 13,
+    "details": {
+      "KERNEL32.dll": [
+        {
+          "name": "CloseHandle",
+          "address": "0x180002000",
+          "ordinal": null
+        },
+        {
+          "name": "ReleaseSemaphore",
+          "address": "0x180002008",
+          "ordinal": null
+        },
+        {
+          "name": "WaitForSingleObject",
+          "address": "0x180002010",
+          "ordinal": null
+        },
+        {
+          "name": "CreateEventA",
+          "address": "0x180002018",
+          "ordinal": null
+        },
+        {
+          "name": "OpenEventA",
+          "address": "0x180002020",
+          "ordinal": null
+        },
+        {
+          "name": "ExitThread",
+          "address": "0x180002028",
+          "ordinal": null
+        },
+        {
+          "name": "ResumeThread",
+          "address": "0x180002030",
+          "ordinal": null
+        },
+        {
+          "name": "CreateProcessA",
+          "address": "0x180002038",
+          "ordinal": null
+        },
+        {
+          "name": "GetThreadContext",
+          "address": "0x180002040",
+          "ordinal": null
+        },
+        {
+          "name": "SetThreadContext",
+          "address": "0x180002048",
+          "ordinal": null
+        },
+        {
+          "name": "VirtualAllocEx",
+          "address": "0x180002050",
+          "ordinal": null
+        },
+        {
+          "name": "WriteProcessMemory",
+          "address": "0x180002058",
+          "ordinal": null
+        },
+        {
+          "name": "CreateSemaphoreA",
+          "address": "0x180002060",
+          "ordinal": null
+        }
+      ]
+    }
+  },
+  "exports": {
+    "count": 0,
+    "details": []
+  },
+  "strings": {
+    "count": 64,
+    "sample": [
+      {
+        "value": "D$ H",
+        "offset": 16,
+        "section": ".text",
+        "type": "ascii"
+      },
+      {
+        "value": "D$(H9",
+        "offset": 55,
+        "section": ".text",
+        "type": "ascii"
+      },
+      {
+        "value": "D$`H",
+        "offset": 163,
+        "section": ".text",
+        "type": "ascii"
+      },
+      {
+        "value": "D$HH",
+        "offset": 168,
+        "section": ".text",
+        "type": "ascii"
+      },
+      {
+        "value": "D$@H",
+        "offset": 181,
+        "section": ".text",
+        "type": "ascii"
+      },
+      {
+        "value": "D$(D",
+        "offset": 203,
+        "section": ".text",
+        "type": "ascii"
+      },
+      {
+        "value": "D$`H",
+        "offset": 163,
+        "section": ".text",
+        "type": "ascii"
+      },
+      {
+        "value": "D$HH",
+        "offset": 168,
+        "section": ".text",
+        "type": "ascii"
+      },
+      {
+        "value": "D$@H",
+        "offset": 181,
+        "section": ".text",
+        "type": "ascii"
+      },
+      {
+        "value": "D$(D",
+        "offset": 203,
+        "section": ".text",
+        "type": "ascii"
+      },
+      {
+        "value": "D$ @",
+        "offset": 374,
+        "section": ".text",
+        "type": "ascii"
+      },
+      {
+        "value": "D$XH",
+        "offset": 408,
+        "section": ".text",
+        "type": "ascii"
+      },
+      {
+        "value": "T$XH",
+        "offset": 435,
+        "section": ".text",
+        "type": "ascii"
+      },
+      {
+        "value": "D$XH",
+        "offset": 408,
+        "section": ".text",
+        "type": "ascii"
+      },
+      {
+        "value": "D$(H",
+        "offset": 55,
+        "section": ".text",
+        "type": "ascii"
+      },
+      {
+        "value": "D$0H",
+        "offset": 781,
+        "section": ".text",
+        "type": "ascii"
+      },
+      {
+        "value": "D$0H",
+        "offset": 781,
+        "section": ".text",
+        "type": "ascii"
+      },
+      {
+        "value": "D$ H",
+        "offset": 16,
+        "section": ".text",
+        "type": "ascii"
+      },
+      {
+        "value": ".text$mn",
+        "offset": 184,
+        "section": ".rdata",
+        "type": "ascii"
+      },
+      {
+        "value": ".idata$5",
+        "offset": 204,
+        "section": ".rdata",
+        "type": "ascii"
+      }
+    ]
+  },
+  "functions": {
+    "count": 5,
+    "categories": {
+      "unknown": 5
+    }
+  }
+}

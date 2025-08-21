@@ -1,0 +1,19 @@
+{
+  "file_info": {
+    "path": "/home/alice/Desktop/pydecomp/test_binaries/complex_meterpreter.dll",
+    "architecture": "x64",
+    "size_bytes": 9216
+  },
+  "analysis_stats": {
+    "sections": 5,
+    "imports": 13,
+    "exports": 0,
+    "functions_analyzed": 5,
+    "strings_found": 64
+  },
+  "function_purposes": {
+    "unknown": 2,
+    "wrapper_function": 2,
+    "data_processing": 1
+  }
+}
