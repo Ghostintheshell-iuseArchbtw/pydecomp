@@ -11,7 +11,23 @@ and improved code generation capabilities.
 import os
 import sys
 import argparse
+import importlib
+import importlib.util
 import pefile
+
+if importlib.util.find_spec("distutils") is None:  # pragma: no cover - compatibility shim
+    distutils_spec = importlib.util.find_spec("setuptools._distutils")
+    if distutils_spec is None:
+        raise ModuleNotFoundError(
+            "distutils is required by capstone; install 'setuptools' to provide it."
+        )
+
+    _distutils = importlib.import_module("setuptools._distutils")  # type: ignore
+
+    sys.modules.setdefault("distutils", _distutils)
+    sys.modules.setdefault("distutils.sysconfig", _distutils.sysconfig)
+
+import distutils.sysconfig  # type: ignore
 import capstone
 from pathlib import Path
 import json
@@ -364,7 +380,7 @@ class EnhancedBinaryAnalyzer:
             
         return instructions
     
-    def identify_functions(self):
+    def identify_functions(self, max_discovered: int = 50):
         """Enhanced function identification with complete analysis."""
         # Start with exported functions
         for name, info in self.exports.items():
@@ -408,7 +424,14 @@ class EnhancedBinaryAnalyzer:
             
             # Limit discovered functions to prevent excessive analysis
             discovered_count = 0
-            max_discovered = 50  # Reasonable limit
+            # Clamp discovery limit to a sane, positive number
+            try:
+                max_discovered = int(max_discovered)
+            except (TypeError, ValueError):
+                max_discovered = 50
+
+            if max_discovered <= 0:
+                max_discovered = 1
             
             for offset in prologue_matches:
                 if discovered_count >= max_discovered:
@@ -498,7 +521,7 @@ class EnhancedBinaryAnalyzer:
 
 class EnhancedCppGenerator:
     """Enhanced C++ code generator with better output quality."""
-    
+
     def __init__(self, analyzer: EnhancedBinaryAnalyzer):
         self.analyzer = analyzer
         self.code_gen = CodeGenerator()
@@ -745,6 +768,177 @@ class EnhancedCppGenerator:
         return "\n".join(report_lines)
 
 
+def run_analysis(
+    binary_path: str,
+    output_dir: str = "output",
+    *,
+    report: bool = False,
+    strings: bool = False,
+    build_files: bool = False,
+    detailed: bool = False,
+    complete: bool = False,
+    max_functions: int = 100,
+    progress_callback=None,
+):
+    """Execute the enhanced analysis pipeline and generate artifacts.
+
+    Parameters
+    ----------
+    binary_path:
+        Path to the PE binary that should be analysed.
+    output_dir:
+        Directory where all generated artefacts will be written.
+    report, strings, build_files, detailed, complete:
+        Command line style toggles kept for backwards compatibility.
+    max_functions:
+        Maximum number of automatically discovered functions to analyse.
+    progress_callback:
+        Optional callable that receives progress messages. When ``None``
+        the function operates silently.
+
+    Returns
+    -------
+    Dict[str, Any]
+        Metadata describing the generated artefacts and analysis summary.
+    """
+
+    binary_path = Path(binary_path)
+    output_dir = Path(output_dir)
+
+    if not binary_path.exists():
+        raise FileNotFoundError(f"Binary file '{binary_path}' not found")
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    def notify(message: str):
+        if progress_callback:
+            progress_callback(message)
+
+    analyzer = EnhancedBinaryAnalyzer(str(binary_path))
+
+    notify(f"Loading {binary_path}...")
+    if not analyzer.load_binary():
+        raise RuntimeError(f"Failed to load binary '{binary_path}'")
+
+    notify(f"✓ Loaded {analyzer.arch} binary")
+
+    notify("Analyzing sections...")
+    analyzer.analyze_sections()
+    notify(f"✓ Found {len(analyzer.sections)} sections")
+
+    notify("Analyzing imports...")
+    analyzer.analyze_imports()
+    total_imports = sum(len(funcs) for funcs in analyzer.imports.values())
+    notify(f"✓ Found {total_imports} imported functions from {len(analyzer.imports)} DLLs")
+
+    notify("Analyzing exports...")
+    analyzer.analyze_exports()
+    notify(f"✓ Found {len(analyzer.exports)} exported functions")
+
+    if strings:
+        notify("Extracting strings...")
+        analyzer.extract_strings()
+        notify(f"✓ Found {len(analyzer.strings)} strings")
+
+    notify("Identifying and analyzing functions...")
+    analyzer.identify_functions(max_functions)
+    notify(f"✓ Analyzed {len(analyzer.functions)} functions")
+
+    generator = EnhancedCppGenerator(analyzer)
+
+    generated_files = {}
+
+    header_file = output_dir / f"{analyzer.binary_path.stem}.h"
+    header_file.write_text(generator.generate_header_file(), encoding="utf-8")
+    notify(f"✓ Generated header: {header_file}")
+    generated_files["header"] = str(header_file)
+
+    cpp_file = output_dir / f"{analyzer.binary_path.stem}.cpp"
+    cpp_file.write_text(generator.generate_cpp_file(), encoding="utf-8")
+    notify(f"✓ Generated implementation: {cpp_file}")
+    generated_files["implementation"] = str(cpp_file)
+
+    header_content, implementation_content = analyzer.complete_code_generator.generate_perfect_c_files(
+        analyzer.binary_path.name,
+        analyzer.functions,
+        analyzer.exports,
+        analyzer.imports,
+        analyzer.arch,
+    )
+
+    perfect_header_file = output_dir / f"{analyzer.binary_path.stem}_perfect.h"
+    perfect_header_file.write_text(header_content, encoding="utf-8")
+    notify(f"✓ Generated perfect C header: {perfect_header_file}")
+    generated_files["perfect_header"] = str(perfect_header_file)
+
+    perfect_impl_file = output_dir / f"{analyzer.binary_path.stem}_perfect.c"
+    perfect_impl_file.write_text(implementation_content, encoding="utf-8")
+    notify(f"✓ Generated perfect C implementation: {perfect_impl_file}")
+    generated_files["perfect_implementation"] = str(perfect_impl_file)
+
+    if build_files:
+        makefile = output_dir / "Makefile"
+        makefile.write_text(analyzer.code_generator.generate_makefile(analyzer.binary_path.stem), encoding="utf-8")
+        notify(f"✓ Generated Makefile: {makefile}")
+        generated_files["makefile"] = str(makefile)
+
+        cmake_file = output_dir / "CMakeLists.txt"
+        cmake_file.write_text(analyzer.code_generator.generate_cmake_file(analyzer.binary_path.stem), encoding="utf-8")
+        notify(f"✓ Generated CMake file: {cmake_file}")
+        generated_files["cmake"] = str(cmake_file)
+
+    if report:
+        report_file = output_dir / f"{analyzer.binary_path.stem}_analysis_report.txt"
+        report_file.write_text(generator.generate_analysis_report(), encoding="utf-8")
+        notify(f"✓ Generated analysis report: {report_file}")
+        generated_files["analysis_report"] = str(report_file)
+
+    summary_file = output_dir / f"{analyzer.binary_path.stem}_summary.json"
+    summary_data = {
+        "file_info": {
+            "path": str(analyzer.binary_path),
+            "architecture": analyzer.arch,
+            "size_bytes": analyzer.binary_path.stat().st_size,
+        },
+        "analysis_stats": {
+            "sections": len(analyzer.sections),
+            "imports": sum(len(funcs) for funcs in analyzer.imports.values()),
+            "exports": len(analyzer.exports),
+            "functions_analyzed": len(analyzer.functions),
+            "strings_found": len(analyzer.strings),
+        },
+        "function_purposes": {},
+        "options": {
+            "report": report,
+            "strings": strings,
+            "build_files": build_files,
+            "detailed": detailed,
+            "complete": complete,
+            "max_functions": max_functions,
+        },
+    }
+
+    for func_info in analyzer.functions.values():
+        purpose = func_info["purpose"]
+        summary_data["function_purposes"][purpose] = summary_data["function_purposes"].get(purpose, 0) + 1
+
+    with open(summary_file, "w", encoding="utf-8") as f:
+        json.dump(summary_data, f, indent=2)
+
+    notify(f"✓ Generated summary: {summary_file}")
+    generated_files["summary"] = str(summary_file)
+
+    notify("Analysis complete! 🎉")
+
+    return {
+        "binary": str(analyzer.binary_path),
+        "architecture": analyzer.arch,
+        "output_dir": str(output_dir),
+        "generated_files": generated_files,
+        "summary": summary_data,
+    }
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Enhanced Binary Disassembler and C/C++ Recreation Tool",
@@ -768,134 +962,34 @@ Examples:
     
     args = parser.parse_args()
     
-    if not os.path.exists(args.binary_path):
-        print(f"Error: Binary file '{args.binary_path}' not found")
-        return 1
-    
-    # Create output directory
-    output_dir = Path(args.output)
-    output_dir.mkdir(exist_ok=True)
-    
-    print(f"Enhanced Binary Analysis Tool")
+    print("Enhanced Binary Analysis Tool")
     print(f"Analyzing: {args.binary_path}")
-    print(f"Output: {output_dir}")
+    print(f"Output: {Path(args.output)}")
     print("-" * 50)
-    
-    # Initialize enhanced analyzer
-    analyzer = EnhancedBinaryAnalyzer(args.binary_path)
-    
-    if not analyzer.load_binary():
-        print("Failed to load binary file")
+
+    try:
+        result = run_analysis(
+            args.binary_path,
+            args.output,
+            report=args.report,
+            strings=args.strings,
+            build_files=args.build_files,
+            detailed=args.detailed,
+            complete=args.complete,
+            max_functions=args.max_functions,
+            progress_callback=print,
+        )
+    except FileNotFoundError as exc:
+        print(exc)
         return 1
-    
-    print(f"✓ Loaded {analyzer.arch} binary")
-    
-    print("Analyzing sections...")
-    analyzer.analyze_sections()
-    print(f"✓ Found {len(analyzer.sections)} sections")
-    
-    print("Analyzing imports...")
-    analyzer.analyze_imports()
-    total_imports = sum(len(funcs) for funcs in analyzer.imports.values())
-    print(f"✓ Found {total_imports} imported functions from {len(analyzer.imports)} DLLs")
-    
-    print("Analyzing exports...")
-    analyzer.analyze_exports()
-    print(f"✓ Found {len(analyzer.exports)} exported functions")
-    
-    if args.strings:
-        print("Extracting strings...")
-        analyzer.extract_strings()
-        print(f"✓ Found {len(analyzer.strings)} strings")
-    
-    print("Identifying and analyzing functions...")
-    analyzer.identify_functions()
-    print(f"✓ Analyzed {len(analyzer.functions)} functions")
-    
-    # Generate C++ code
-    generator = EnhancedCppGenerator(analyzer)
-    
-    # Write header file
-    header_file = output_dir / f"{analyzer.binary_path.stem}.h"
-    with open(header_file, 'w', encoding='utf-8') as f:
-        f.write(generator.generate_header_file())
-    print(f"✓ Generated header: {header_file}")
-    
-    # Write implementation file
-    cpp_file = output_dir / f"{analyzer.binary_path.stem}.cpp"
-    with open(cpp_file, 'w', encoding='utf-8') as f:
-        f.write(generator.generate_cpp_file())
-    print(f"✓ Generated implementation: {cpp_file}")
-    
-    # Generate perfect C files (new improved version)
-    header_content, implementation_content = analyzer.complete_code_generator.generate_perfect_c_files(
-        analyzer.binary_path.name, analyzer.functions, analyzer.exports, analyzer.imports, analyzer.arch
-    )
-    
-    # Write perfect C header
-    perfect_header_file = output_dir / f"{analyzer.binary_path.stem}_perfect.h"
-    with open(perfect_header_file, 'w', encoding='utf-8') as f:
-        f.write(header_content)
-    print(f"✓ Generated perfect C header: {perfect_header_file}")
-    
-    # Write perfect C implementation
-    perfect_impl_file = output_dir / f"{analyzer.binary_path.stem}_perfect.c"
-    with open(perfect_impl_file, 'w', encoding='utf-8') as f:
-        f.write(implementation_content)
-    print(f"✓ Generated perfect C implementation: {perfect_impl_file}")
-    
-    # Generate build files if requested
-    if args.build_files:
-        # Generate Makefile
-        makefile = output_dir / "Makefile"
-        with open(makefile, 'w', encoding='utf-8') as f:
-            f.write(analyzer.code_generator.generate_makefile(analyzer.binary_path.stem))
-        print(f"✓ Generated Makefile: {makefile}")
-        
-        # Generate CMakeLists.txt
-        cmake_file = output_dir / "CMakeLists.txt"
-        with open(cmake_file, 'w', encoding='utf-8') as f:
-            f.write(analyzer.code_generator.generate_cmake_file(analyzer.binary_path.stem))
-        print(f"✓ Generated CMake file: {cmake_file}")
-    
-    # Write analysis report
-    if args.report:
-        report_file = output_dir / f"{analyzer.binary_path.stem}_analysis_report.txt"
-        with open(report_file, 'w', encoding='utf-8') as f:
-            f.write(generator.generate_analysis_report())
-        print(f"✓ Generated analysis report: {report_file}")
-    
-    # Generate summary JSON
-    summary_file = output_dir / f"{analyzer.binary_path.stem}_summary.json"
-    summary_data = {
-        'file_info': {
-            'path': str(analyzer.binary_path),
-            'architecture': analyzer.arch,
-            'size_bytes': analyzer.binary_path.stat().st_size,
-        },
-        'analysis_stats': {
-            'sections': len(analyzer.sections),
-            'imports': sum(len(funcs) for funcs in analyzer.imports.values()),
-            'exports': len(analyzer.exports),
-            'functions_analyzed': len(analyzer.functions),
-            'strings_found': len(analyzer.strings),
-        },
-        'function_purposes': {},
-    }
-    
-    # Count functions by purpose
-    for func_info in analyzer.functions.values():
-        purpose = func_info['purpose']
-        summary_data['function_purposes'][purpose] = summary_data['function_purposes'].get(purpose, 0) + 1
-    
-    with open(summary_file, 'w', encoding='utf-8') as f:
-        json.dump(summary_data, f, indent=2)
-    print(f"✓ Generated summary: {summary_file}")
-    
+    except RuntimeError as exc:
+        print(exc)
+        return 1
+
     print("-" * 50)
     print("Analysis complete! 🎉")
-    print(f"Check the '{output_dir}' directory for generated files.")
-    
+    print(f"Check the '{result['output_dir']}' directory for generated files.")
+
     return 0
 
 

@@ -23,45 +23,53 @@ A comprehensive tool for reverse engineering binary files (DLL, SYS, EXE) and ge
 
 ## Installation
 
-### Prerequisites
-- Python 3.7 or higher
-- Windows environment (for PE file analysis)
+### Quick install
+The project now ships with a standard Python packaging workflow. Install it straight from the repository root:
 
-### Install Dependencies
-```powershell
-cd c:\Users\kelly\darpa
-pip install -r requirements.txt
+```bash
+pip install .
 ```
 
-### Required Python Packages
-- `capstone`: Disassembly engine
-- `pefile`: PE file parser
-- `pyelftools`: ELF file support (future enhancement)
-- `pygments`: Syntax highlighting
-- `click`: Command-line interface
-- `jinja2`: Template engine
+The command automatically pulls in every dependency listed in `pyproject.toml`, so no manual `pip install -r requirements.txt` step is required.
+
+### Editable/development install
+If you intend to modify the code base, install it in editable mode instead:
+
+```bash
+git clone https://github.com/your-org/pydecomp.git
+cd pydecomp
+pip install -e .
+```
+
+Both commands work on Windows, Linux and macOS as long as Python 3.8+ is available.
 
 ## Usage
 
 ### Basic Usage
-```powershell
+The packaging step exposes a `pydecomp` console script that wraps the full pipeline:
+
+```bash
 # Analyze a DLL file
-python enhanced_disassembler.py sample.dll
+pydecomp analyze sample.dll
 
 # Analyze with full reporting
-python enhanced_disassembler.py sample.dll --report --strings
+pydecomp analyze sample.dll --report --strings
 
-# Generate build files
-python enhanced_disassembler.py sample.dll --build-files
+# Generate build files alongside the reconstructed source
+pydecomp analyze sample.dll --build-files
 ```
 
 ### Advanced Usage
-```powershell
+```bash
 # Complete analysis with custom output directory
-python enhanced_disassembler.py malware.exe -o analysis_results --report --strings --build-files --detailed
+pydecomp analyze malware.exe -o analysis_results --report --strings --build-files --detailed
 
-# Quick analysis for large files
-python enhanced_disassembler.py large_driver.sys -o quick_analysis
+# Quick analysis for large files while capping the amount of discovered functions
+pydecomp analyze large_driver.sys -o quick_analysis --max-functions 40
+
+# Validate and build the generated project (requires a C/C++ toolchain)
+pydecomp validate analysis_results
+pydecomp build analysis_results --system cmake
 ```
 
 ### Command Line Options
@@ -77,10 +85,11 @@ python enhanced_disassembler.py large_driver.sys -o quick_analysis
 ### Generated Files
 1. **`[filename].h`**: Header file with function declarations and data structures
 2. **`[filename].cpp`**: C++ implementation with reconstructed functions
-3. **`[filename]_analysis_report.txt`**: Detailed analysis report (with --report)
-4. **`[filename]_summary.json`**: JSON summary of analysis results
-5. **`Makefile`**: Build file for GCC/MinGW (with --build-files)
-6. **`CMakeLists.txt`**: CMake build configuration (with --build-files)
+3. **`[filename]_perfect.h` / `[filename]_perfect.c`**: Perfect C recreation output
+4. **`[filename]_analysis_report.txt`**: Detailed analysis report (with `--report`)
+5. **`[filename]_summary.json`**: JSON summary of analysis results
+6. **`Makefile`**: Build file for GCC/MinGW (with `--build-files`)
+7. **`CMakeLists.txt`**: CMake build configuration (with `--build-files`)
 
 ### Example Output Structure
 ```
@@ -197,8 +206,8 @@ Includes signatures for common Windows APIs:
 ## Examples
 
 ### Example 1: Simple DLL Analysis
-```powershell
-python enhanced_disassembler.py simple.dll --report
+```bash
+pydecomp analyze simple.dll --report
 ```
 
 This generates:
@@ -207,15 +216,15 @@ This generates:
 - `simple_analysis_report.txt` with detailed analysis
 
 ### Example 2: Driver Analysis
-```powershell
-python enhanced_disassembler.py driver.sys -o driver_analysis --strings --build-files
+```bash
+pydecomp analyze driver.sys -o driver_analysis --strings --build-files
 ```
 
 This creates a complete analysis package with build files.
 
 ### Example 3: Malware Analysis
-```powershell
-python enhanced_disassembler.py suspicious.exe -o malware_analysis --detailed --report --strings
+```bash
+pydecomp analyze suspicious.exe -o malware_analysis --detailed --report --strings
 ```
 
 This performs comprehensive analysis suitable for malware research.
