@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pydecomp"
+version = "0.1.0"
+description = "Binary disassembler and C/C++ recreation toolkit"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [{ name = "PyDecomp Contributors" }]
+keywords = ["reverse engineering", "disassembler", "binary analysis"]
+dependencies = [
+    "capstone==5.0.1",
+    "pefile==2023.2.7",
+    "pyelftools==0.31",
+    "pygments==2.17.2",
+    "click==8.1.7",
+    "jinja2==3.1.4",
+    "tkinter-tooltip>=2.0.0",
+    "pillow>=9.0.0",
+    "setuptools>=65",
+]
+
+[project.scripts]
+pydecomp = "pydecomp_cli:cli"
+
+[tool.setuptools]
+py-modules = [
+    "binary_disassembler",
+    "build_system",
+    "code_editor",
+    "code_generator",
+    "complete_demo",
+    "complete_disassembler",
+    "control_flow_analyzer",
+    "demo_gui",
+    "enhanced_code_generator",
+    "enhanced_disassembler",
+    "enhanced_pattern_analyzer",
+    "gui_analyzer",
+    "gui_main",
+    "pattern_analyzer",
+    "perfect_c_generator",
+    "project_manager",
+    "run_gui",
+    "settings_manager",
+    "pydecomp_cli",
+]

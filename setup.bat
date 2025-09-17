@@ -29,7 +29,7 @@ if errorlevel 1 (
 
 echo.
 echo Installing required packages...
-pip install -r requirements.txt
+pip install .
 
 if errorlevel 1 (
     echo ERROR: Failed to install dependencies
@@ -47,16 +47,16 @@ echo Usage Examples:
 echo ===============
 echo.
 echo Basic analysis:
-echo   python enhanced_disassembler.py sample.dll
+echo   pydecomp analyze sample.dll
 echo.
 echo Full analysis with report:
-echo   python enhanced_disassembler.py sample.dll --report --strings
+echo   pydecomp analyze sample.dll --report --strings
 echo.
 echo Complete analysis with build files:
-echo   python enhanced_disassembler.py sample.exe -o analysis --report --strings --build-files
+echo   pydecomp analyze sample.exe -o analysis --report --strings --build-files
 echo.
 echo Testing the tool:
-echo   python test_tool.py
+echo   pydecomp validate analysis
 echo.
 
 REM Ask if user wants to run a test

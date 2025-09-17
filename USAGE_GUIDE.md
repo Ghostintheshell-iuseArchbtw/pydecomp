@@ -14,18 +14,18 @@ You now have a powerful binary reverse engineering tool that can:
 ## Quick Start
 
 ### Basic Analysis
-```powershell
-python enhanced_disassembler.py target.dll
+```bash
+pydecomp analyze target.dll
 ```
 
 ### Complete Analysis
-```powershell
-python enhanced_disassembler.py target.dll --report --strings --build-files
+```bash
+pydecomp analyze target.dll --report --strings --build-files
 ```
 
 ### Custom Output Directory
-```powershell
-python enhanced_disassembler.py target.dll -o my_analysis --report --strings
+```bash
+pydecomp analyze target.dll -o my_analysis --report --strings
 ```
 
 ## What the Tool Generates
@@ -88,7 +88,7 @@ The tool automatically categorizes functions:
 
 ### Session 1: Analyzing a System DLL
 ```powershell
-PS C:\Users\kelly\darpa> python enhanced_disassembler.py C:\Windows\System32\winmm.dll -o winmm_analysis --report --strings --build-files
+PS C:\Users\kelly\darpa> pydecomp analyze C:\Windows\System32\winmm.dll -o winmm_analysis --report --strings --build-files
 
 Enhanced Binary Analysis Tool
 Analyzing: C:\Windows\System32\winmm.dll
