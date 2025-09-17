@@ -50,9 +50,11 @@ Thumbs.db
 *_temp/
 
 # Test files (can be regenerated)
+# Keep the ones under the dedicated tests/ directory under version control.
 test_*.py
 validate_*.py
 quick_test.py
+!tests/test_*.py
 
 # Compiled binaries and object files
 *.exe
